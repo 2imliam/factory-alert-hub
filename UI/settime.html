@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Schedule Management - Manufacturing OS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "slate-dark": "#0d141b",
+                        "slate-medium": "#4c739a",
+                        "slate-light": "#e7edf3",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"],
+                        "body": ["Inter", "Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+                    boxShadow: {
+                        "card": "0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px; 
+            line-height: 1;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+    </style>
+</head>
+                              <body class="bg-background-light dark:bg-background-dark text-slate-dark font-display antialiased overflow-x-hidden min-h-screen flex flex-col">
+                                  <main class="flex-1 w-full max-w-7xl mx-auto px-6 py-8">
+                                      <div class="flex flex-col gap-6 mb-8">
+                                          <div class="flex items-center gap-2">
+                                              <button id="btnBackHome" class="group flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-medium hover:bg-white hover:text-slate-dark hover:shadow-sm transition-all">
+                                                  <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                                                  <span>Quay lại</span>
+                                              </button>
+                                          </div>
+                                          <div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                                              <div>
+                                                  <h2 class="text-3xl font-bold tracking-tight text-slate-dark dark:text-white">Cài đặt thời gian</h2>
+                                                  <p class="mt-1 text-slate-medium">Quản lý các mốc thời gian thông báo tự động cho dây chuyền sản xuất.</p>
+                                              </div>
+                                              <div class="flex items-center gap-2 text-sm text-slate-medium bg-white px-3 py-1.5 rounded-full border border-slate-light shadow-sm">
+                                                  <span class="flex h-2 w-2 rounded-full bg-green-500"></span>
+                                                  Hệ thống đang hoạt động
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                                          <div class="lg:col-span-4 flex flex-col gap-6">
+                                              <div class="rounded-xl border border-slate-light bg-white p-6 shadow-card dark:bg-[#1a2632] dark:border-slate-700 sticky top-8">
+                                                  <div class="flex items-center gap-3 mb-6">
+                                                      <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                                          <span class="material-symbols-outlined">add_alarm</span>
+                                                      </div>
+                                                      <div>
+                                                          <h3 class="text-lg font-bold text-slate-dark dark:text-white">Thêm lịch mới</h3>
+                                                          <p class="text-xs text-slate-medium">Tạo mốc thời gian thông báo</p>
+                                                      </div>
+                                                  </div>
+                                                  <form class="flex flex-col gap-6">
+                                                      <div class="flex flex-col gap-2">
+                                                          <label class="text-sm font-medium text-slate-dark dark:text-gray-200">Thời gian (Giờ : Phút)</label>
+                                                          <div class="flex gap-2">
+                                                              <div class="relative flex-1">
+                                                                  <select class="w-full appearance-none rounded-lg border border-slate-light bg-slate-50 px-4 py-2.5 pr-8 text-slate-dark focus:border-primary focus:ring-1 focus:ring-primary dark:bg-slate-800 dark:border-slate-600 dark:text-white cursor-pointer font-mono font-medium text-center text-lg">
+                                                                      <option>07</option>
+                                                                      <option>08</option>
+                                                                      <option>09</option>
+                                                                      <option selected="">10</option>
+                                                                      <option>11</option>
+                                                                      <option>12</option>
+                                                                      <option>13</option>
+                                                                      <option>14</option>
+                                                                      <option>15</option>
+                                                                      <option>16</option>
+                                                                      <option>17</option>
+                                                                  </select>
+                                                                  <div class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-400">
+                                                                      <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="flex items-center text-slate-400 font-bold">:</div>
+                                                              <div class="relative flex-1">
+                                                                  <select class="w-full appearance-none rounded-lg border border-slate-light bg-slate-50 px-4 py-2.5 pr-8 text-slate-dark focus:border-primary focus:ring-1 focus:ring-primary dark:bg-slate-800 dark:border-slate-600 dark:text-white cursor-pointer font-mono font-medium text-center text-lg">
+                                                                      <option selected="">00</option>
+                                                                      <option>15</option>
+                                                                      <option>30</option>
+                                                                      <option>45</option>
+                                                                  </select>
+                                                                  <div class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-400">
+                                                                      <span class="material-symbols-outlined text-[18px]">expand_more</span>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="flex flex-col gap-2">
+                                                          <label class="text-sm font-medium text-slate-dark dark:text-gray-200">Loại thông báo</label>
+                                                          <div class="relative">
+                                                              <div class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                                                  <span class="material-symbols-outlined text-[20px]">category</span>
+                                                              </div>
+                                                              <select class="w-full appearance-none rounded-lg border border-slate-light bg-white px-4 py-2.5 pl-10 pr-8 text-slate-dark focus:border-primary focus:ring-1 focus:ring-primary dark:bg-slate-800 dark:border-slate-600 dark:text-white cursor-pointer">
+                                                                  <option value="san-luong">Sản lượng (Production)</option>
+                                                                  <option value="co-dinh">Cố định (Fixed)</option>
+                                                              </select>
+                                                              <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+                                                                  <span class="material-symbols-outlined text-[20px]">expand_more</span>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <button class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all" type="button">
+                                                          <span class="material-symbols-outlined text-[20px]">add</span>
+                                                          Thêm thời gian
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                          <div class="lg:col-span-8">
+                                              <div class="rounded-xl border border-slate-light bg-white shadow-card dark:bg-[#1a2632] dark:border-slate-700 flex flex-col h-full">
+                                                  <div class="flex items-center justify-between border-b border-slate-light px-6 py-4 dark:border-slate-700">
+                                                      <div class="flex items-center gap-2">
+                                                          <span class="material-symbols-outlined text-slate-medium">list_alt</span>
+                                                          <h3 class="text-base font-bold text-slate-dark dark:text-white">Danh sách lịch trình</h3>
+                                                      </div>
+                                                      <div class="flex gap-2">
+                                                          <button class="p-1 text-slate-400 hover:text-primary transition-colors" title="Filter">
+                                                              <span class="material-symbols-outlined text-[20px]">filter_list</span>
+                                                          </button>
+                                                      </div>
+                                                  </div>
+                                                  <div class="overflow-x-auto">
+                                                      <table class="w-full text-left text-sm">
+                                                          <thead class="bg-slate-50 text-slate-medium dark:bg-slate-800/50">
+                                                              <tr>
+                                                                  <th class="px-6 py-3 font-medium">Thời gian</th>
+                                                                  <th class="px-6 py-3 font-medium">Loại thông báo</th>
+                                                                  <th class="px-6 py-3 font-medium">Ghi chú</th>
+                                                                  <th class="px-6 py-3 font-medium text-center">Trạng thái</th>
+                                                                  <th class="px-6 py-3 font-medium text-right">Hành động</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody class="divide-y divide-slate-light dark:divide-slate-700">
+                                                              <tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <div class="flex items-center gap-2">
+                                                                          <span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+                                                                          <span class="font-mono text-lg font-semibold text-slate-dark dark:text-white">08:00</span>
+                                                                      </div>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 border border-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800">
+                                                                          <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                                          Sản lượng
+                                                                      </span>
+                                                                  </td>
+                                                                  <td class="px-6 py-4 text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
+                                                                      Báo cáo ca sáng
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-center">
+                                                                      <label class="relative inline-flex cursor-pointer items-center">
+                                                                          <input checked="" class="peer sr-only" type="checkbox" value="" />
+                                                                          <div class="peer h-6 w-11 rounded-full bg-slate-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:bg-slate-700"></div>
+                                                                      </label>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-right">
+                                                                      <button class="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                                                                          <span class="material-symbols-outlined text-[20px]">delete</span>
+                                                                      </button>
+                                                                  </td>
+                                                              </tr>
+                                                              <tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <div class="flex items-center gap-2">
+                                                                          <span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+                                                                          <span class="font-mono text-lg font-semibold text-slate-dark dark:text-white">10:30</span>
+                                                                      </div>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <span class="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-2.5 py-1 text-xs font-medium text-purple-700 border border-purple-100 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-800">
+                                                                          <span class="h-1.5 w-1.5 rounded-full bg-purple-500"></span>
+                                                                          Cố định
+                                                                      </span>
+                                                                  </td>
+                                                                  <td class="px-6 py-4 text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
+                                                                      Kiểm tra thiết bị định kỳ
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-center">
+                                                                      <label class="relative inline-flex cursor-pointer items-center">
+                                                                          <input checked="" class="peer sr-only" type="checkbox" value="" />
+                                                                          <div class="peer h-6 w-11 rounded-full bg-slate-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:bg-slate-700"></div>
+                                                                      </label>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-right">
+                                                                      <button class="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                                                                          <span class="material-symbols-outlined text-[20px]">delete</span>
+                                                                      </button>
+                                                                  </td>
+                                                              </tr>
+                                                              <tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <div class="flex items-center gap-2">
+                                                                          <span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+                                                                          <span class="font-mono text-lg font-semibold text-slate-dark dark:text-white">12:00</span>
+                                                                      </div>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 border border-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800">
+                                                                          <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                                          Sản lượng
+                                                                      </span>
+                                                                  </td>
+                                                                  <td class="px-6 py-4 text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
+                                                                      Tổng hợp sản lượng trưa
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-center">
+                                                                      <label class="relative inline-flex cursor-pointer items-center">
+                                                                          <input class="peer sr-only" type="checkbox" value="" />
+                                                                          <div class="peer h-6 w-11 rounded-full bg-slate-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:bg-slate-700"></div>
+                                                                      </label>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-right">
+                                                                      <button class="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                                                                          <span class="material-symbols-outlined text-[20px]">delete</span>
+                                                                      </button>
+                                                                  </td>
+                                                              </tr>
+                                                              <tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <div class="flex items-center gap-2">
+                                                                          <span class="material-symbols-outlined text-slate-400 text-[18px]">schedule</span>
+                                                                          <span class="font-mono text-lg font-semibold text-slate-dark dark:text-white">17:00</span>
+                                                                      </div>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4">
+                                                                      <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 border border-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800">
+                                                                          <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                                                                          Sản lượng
+                                                                      </span>
+                                                                  </td>
+                                                                  <td class="px-6 py-4 text-slate-500 dark:text-slate-400 max-w-[200px] truncate">
+                                                                      Chốt ca chiều
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-center">
+                                                                      <label class="relative inline-flex cursor-pointer items-center">
+                                                                          <input checked="" class="peer sr-only" type="checkbox" value="" />
+                                                                          <div class="peer h-6 w-11 rounded-full bg-slate-200 after:absolute after:left-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:bg-slate-700"></div>
+                                                                      </label>
+                                                                  </td>
+                                                                  <td class="whitespace-nowrap px-6 py-4 text-right">
+                                                                      <button class="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 transition-colors">
+                                                                          <span class="material-symbols-outlined text-[20px]">delete</span>
+                                                                      </button>
+                                                                  </td>
+                                                              </tr>
+                                                          </tbody>
+                                                      </table>
+                                                  </div>
+                                                  <div class="flex items-center justify-between border-t border-slate-light px-6 py-4 mt-auto dark:border-slate-700">
+                                                      <span class="text-sm text-slate-500">Hiển thị <span class="font-medium text-slate-dark dark:text-white">1-4</span> trong <span class="font-medium text-slate-dark dark:text-white">12</span> lịch trình</span>
+                                                      <div class="flex gap-2">
+                                                          <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-light text-slate-400 hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:hover:bg-slate-800" disabled="">
+                                                              <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                                                          </button>
+                                                          <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-light text-slate-dark hover:border-slate-300 hover:bg-slate-50 dark:border-slate-600 dark:text-white dark:hover:bg-slate-800">
+                                                              <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                                                          </button>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </main>
+                                  <script>
+                                      function gotoHome() {
+                                          const base = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1);
+                                          window.location.href = base + "function.html";
+                                      }
+
+                                      document.getElementById("btnBackHome")?.addEventListener("click", () => {
+                                          gotoHome();
+                                      });
+                                  </script>
+
+                              </body></html>
